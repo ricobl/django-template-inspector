@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import os, sys
+_abs = lambda *a: os.path.abspath(os.path.join(*a))
+
+ROOT = _abs(os.path.dirname(__file__))
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -27,9 +32,7 @@ TEMPLATE_LOADERS = (
 ROOT_URLCONF = 'sampleproject.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    _abs(ROOT, 'templates'),
 )
 
 INSTALLED_APPS = (
