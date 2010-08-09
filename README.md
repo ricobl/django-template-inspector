@@ -14,15 +14,15 @@ Inspector for Django Templates
 
 2. Install the app within your django project by editing your `settings.py` file:
 
-    INSTALLED_APPS = (
-        'django.contrib.auth',
-        'django.contrib.admin',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.sites',
-        ...
-        'tip',
-    )
+        INSTALLED_APPS = (
+            'django.contrib.auth',
+            'django.contrib.admin',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.sites',
+            ...
+            'tip',
+        )
 
 ## Release Plan
 
