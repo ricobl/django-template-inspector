@@ -10,11 +10,11 @@ Inspector for Django Templates
 
 1. Install the python module in your system:
 
-    python setup.py install
+    `python setup.py install`
 
 2. Install the app within your django project by editing your `settings.py` file:
 
-    INSTALLED_APPS = (
+    `INSTALLED_APPS = (
         'django.contrib.auth',
         'django.contrib.admin',
         'django.contrib.contenttypes',
@@ -22,7 +22,7 @@ Inspector for Django Templates
         'django.contrib.sites',
         ...
         'tip',
-    )
+    )`
 
 ## Release Plan
 
