@@ -23,7 +23,46 @@ Inspector for Django Templates
         'tip',
     )`
 
-## Features
+## Release Plan
+
+    #. Release 1
+    List all paths defined in TEMPLATE_DIRS and all installed apps template dirs.
+
+    #. Release 2
+    Template listing
+    Template inclusion
+
+    #. Release 3
+    Template inheritance (ordered)
+
+    #. Release 4
+    Template overrides
+    Template Blocks
+
+    #. Release 5
+    Template Blocks orphans
+    Template Blocks overrides
+
+    #. Release 6
+    Template Block search
+    Template variables search
+    Web Display of Template information
+
+## Planned Features
 
 1. Template path listing
+    List all paths defined in TEMPLATE_DIRS and all installed apps template dirs.
+
+2. Template structure information
+    Template listing
+    Template inheritance (ordered)
+    Template inclusion
+    Template overrides
+    Template Blocks
+    Template Blocks orphans
+    Template Blocks overrides
+    Template Block search
+    Template variables search
+
+3. Web Display of Template information
     
