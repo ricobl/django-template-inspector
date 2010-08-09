@@ -51,9 +51,11 @@ Inspector for Django Templates
 ## Planned Features
 
 1. Template path listing
+
     List all paths defined in TEMPLATE_DIRS and all installed apps template dirs.
 
 2. Template structure information
+
     Template listing
     Template inheritance (ordered)
     Template inclusion
@@ -65,4 +67,3 @@ Inspector for Django Templates
     Template variables search
 
 3. Web Display of Template information
-    
