@@ -56,14 +56,14 @@ Inspector for Django Templates
 
 2. Template structure information
 
-    Template listing
-    Template inheritance (ordered)
-    Template inclusion
-    Template overrides
-    Template Blocks
-    Template Blocks orphans
-    Template Blocks overrides
-    Template Block search
-    Template variables search
+    * Template listing
+    * Template inheritance (ordered)
+    * Template inclusion
+    * Template overrides
+    * Template Blocks
+    * Template Blocks orphans
+    * Template Blocks overrides
+    * Template Block search
+    * Template variables search
 
 3. Web Display of Template information
