@@ -3,3 +3,4 @@
 *.swp
 ?humbs.db
 .coverage
+tip.sqlite
