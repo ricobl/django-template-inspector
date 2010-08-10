@@ -9,7 +9,7 @@ class Command(BaseCommand):
 Show information about templates
 
 """
-    verbose = True
+    verbose = False
 
     option_list = BaseCommand.option_list + (
         make_option('-p', '--path_list', 
@@ -19,6 +19,7 @@ Show information about templates
     )
 
     def handle(self, *args, **options):
+        self._show_messsage("Retrieving show template action")
         self.show_templates_path = bool(options.get('action', False))
 
     def _show_messsage(self, mensagem):
