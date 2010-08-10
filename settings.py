@@ -78,3 +78,5 @@ INSTALLED_APPS = (
     #'django.contrib.sites',
     'tip',
 )
+
+TEST_RUNNER = 'nose_runner.run_tests'

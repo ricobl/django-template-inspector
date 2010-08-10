@@ -1,2 +1,2 @@
 test:
-	nosetests --with-coverage --cover-package=tip -sd
+	./manage.py test -- --with-coverage --cover-package=tip -sd
