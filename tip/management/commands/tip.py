@@ -35,4 +35,3 @@ class Command(BaseCommand):
             paths = action.list_all_paths()
             for path in paths:
                 print path
-            return paths
