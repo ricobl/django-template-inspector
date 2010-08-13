@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     #'django.contrib.sessions',
     #'django.contrib.sites',
     'tip',
+    'dummy_app1',
 )
 
 TEST_RUNNER = 'nose_runner.run_tests'

@@ -3,9 +3,14 @@
 
 from django.conf import settings
 
+from django.template.loaders.app_directories import app_template_dirs
+
 class TemplatePathListingAction (object):
 
     def list_all_paths(self):
-        return settings.TEMPLATE_DIRS
+        template_paths = settings.TEMPLATE_DIRS
 
+        template_paths += app_template_dirs
+
+        return template_paths
 
