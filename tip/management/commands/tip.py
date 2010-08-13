@@ -31,7 +31,12 @@ class Command(BaseCommand):
         self.show_templates_path = options.get('show_templates_path')
 
         if self.show_templates_path:
-            action = TemplatePathListingAction()
-            paths = action.list_all_paths()
-            for path in paths:
-                print path
+            self.print_template_paths()
+
+    def print_template_paths(self):
+        action = TemplatePathListingAction()
+        paths = action.list_all_paths()
+        
+        for path in paths:
+            print path
+        print "\n"
