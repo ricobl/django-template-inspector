@@ -5,6 +5,8 @@ from django.conf import settings
 
 from django.template.loaders.app_directories import app_template_dirs
 
+from tip.filesystem import FileSystem
+
 class TemplatePathListingAction (object):
 
     def list_all_paths(self):
@@ -15,4 +17,11 @@ class TemplatePathListingAction (object):
         return template_paths
 
     def list_all_templates(self):
-        return []
+        templates = {}
+        paths = self.list_all_paths()
+        for path in paths:
+            templates[path] = []
+            files_in_path = FileSystem.locate(path)
+            for template_file in files_in_path:
+                templates[path].append(template_file)
+        return templates
