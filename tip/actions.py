@@ -22,6 +22,5 @@ class TemplatePathListingAction (object):
         for path in paths:
             templates[path] = []
             files_in_path = FileSystem.locate(path)
-            for template_file in files_in_path:
-                templates[path].append(template_file)
+            map(templates[path].append, files_in_path)
         return templates
