@@ -14,3 +14,5 @@ class TemplatePathListingAction (object):
 
         return template_paths
 
+    def list_all_templates(self):
+        return []
