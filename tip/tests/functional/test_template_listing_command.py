@@ -26,7 +26,7 @@ def i_have_a_command_to_list_all_templates():
 def invoking_the_listing_command_returns_all_templates():
     command.handle(list_templates=True)
 
-    assert abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html') in sys.stdout.outputs, 'return a list of templates'
+    assert "\t\033[32m%s\033[0m" % abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html') in sys.stdout.outputs, 'return a list of templates'
 
 original_stdout = sys.stdout
 def setUp():
