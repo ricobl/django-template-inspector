@@ -19,7 +19,7 @@
 from setuptools import setup, find_packages
 from tip import __version__
 
-setup(name='Django Template Isnpector',
+setup(name='Django Template Inspector',
     version=__version__,
     description='Inspector for Django Templates',
     author='Enrico Batista',
