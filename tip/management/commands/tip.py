@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+# This is needed to avoid a conflict between
+# the app named "tip" and the namesake command
+from __future__ import absolute_import
+
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
 from optparse import make_option
 import pprint
 
-import os
-import sys
 
-sys.path.append(os.path.join(settings.ROOT_DIR, "tip"))
-
-from actions import TemplatePathListingAction
+from tip.actions import TemplatePathListingAction
 
 class Command(BaseCommand):
     help = u"""
