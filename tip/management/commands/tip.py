@@ -40,7 +40,7 @@ class Command(BaseCommand):
         'dirs': ShowTemplateDirs,
     }
 
-    def handle(self, subcommand, *args, **kwargs):
+    def handle(self, subcommand=None, *args, **kwargs):
         cmd_klass = self.sub_commands.get(subcommand, None)
         if cmd_klass is None:
             raise CommandError('Invalid sub-command "%s".' % subcommand)
