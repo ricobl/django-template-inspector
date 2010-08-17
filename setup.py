@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# <Django Media Lint - CSS and JS lint checker for django>
+# <Django Template Inspector - Extracts Information About Django Templates>
 # Copyright (C) <2010>  Jose Claudio Figueiredo <jcfigueiredo@gmail.com>
 # Copyright (C) <2010>  Enrico Batista <ricobl@gmail.com>
 #
@@ -19,13 +19,13 @@
 from setuptools import setup, find_packages
 from tip import __version__
 
-setup(name='Django Template Inspector',
+setup(name='django-tip',
     version=__version__,
     description='Inspector for Django Templates',
     author='Enrico Batista',
     author_email='ricobl@gmail.com',
     url='http://github.com/ricobl/django-template-inspector',
-    packages=find_packages(),
+    packages=['tip'],
     include_package_data = True,
     package_data = {
         'tip': [],
