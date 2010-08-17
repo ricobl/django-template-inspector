@@ -1,5 +1,5 @@
 test: clean
-	@python manage.py test -- --with-coverage --cover-package=tip -sd
+	@python manage.py test -- --verbose --with-coverage --cover-package=tip -sd
 clean:
 	@find . -name "*.pyc" -delete
 install:
