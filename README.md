@@ -48,12 +48,12 @@ Inspector for Django Templates
 
 1. Template path listing
     * List all paths defined in `TEMPLATE_DIRS` and all installed apps template dirs.
-    -p, --path_list       List template paths
+    dirs    List template paths
 
 2. Template structure information
-    * Template listing
-    * Template inheritance (ordered)
+    * Template listing - list option
     * Template inclusion
+    * Template inheritance (ordered)
     * Template overrides
     * Template Blocks
     * Template Blocks orphans

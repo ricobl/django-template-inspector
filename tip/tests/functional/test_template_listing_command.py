@@ -22,6 +22,7 @@ def teardown_stdout():
 def test_i_have_a_template_listing_command():
     i_have_a_sub_command_to_list_all_templates()
     invoking_the_listing_command_returns_all_templates()
+    i_include_an_invalid_template()
 
 def i_have_a_sub_command_to_list_all_templates():
     assert 'list' in command.sub_commands
@@ -32,3 +33,8 @@ def invoking_the_listing_command_returns_all_templates():
             abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html')
     assert expected in sys.stdout.outputs, 'return a list of templates'
 
+def i_include_an_invalid_template():
+    command.handle('list')
+    expected = "\t\033[31m%s\033[0m" %\
+            abs(settings.ROOT_DIR, 'dummy_app1/templates/invalid_template.html')
+    assert expected in sys.stdout.outputs, 'should include an invalid template'

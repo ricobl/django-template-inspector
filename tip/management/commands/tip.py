@@ -7,21 +7,29 @@ from __future__ import absolute_import
 
 from django.core.management.base import BaseCommand, CommandError
 
-from tip.actions import TemplatePathListingAction
+from tip.actions import TemplatePathListingAction, TemplateValidationAction
 
-# \033[32m green
-# \033[31m red
-# \033[34m blue
+class Colors(object):
+    RED     = "\033[31m"
+    GREEN   = "\033[32m"
+    BLUE    = "\033[34m"
 
 class ShowTemplateList(BaseCommand):
     help = "List templates on the project."
-    action = TemplatePathListingAction()
+    listing_action      = TemplatePathListingAction()
+    validation_action = TemplateValidationAction()
     def handle(self, **options):
-        templates_in_paths = self.action.list_all_templates()
-        for path in templates_in_paths.keys():
-            print '\033[34m%s\033[0m' %path
+        templates_in_paths = self.listing_action.list_all_templates()
+        paths = self.listing_action.list_all_paths()
+        for path in paths:
+            print '%s%s\033[0m' %(Colors.BLUE, path)
+
             for template in templates_in_paths[path]:
-                print '\t\033[32m%s\033[0m' %template
+                is_valid, reason = self.validation_action.validate(template)
+                color = Colors.GREEN if is_valid else Colors.RED
+                print '\t%s%s\033[0m' %(color, template)
+                if reason:
+                    print reason
 
 class ShowTemplateDirs(BaseCommand):
     help = "List available template dirs on the project."
