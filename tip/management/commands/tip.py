@@ -7,12 +7,22 @@ from __future__ import absolute_import
 
 from django.core.management.base import BaseCommand, CommandError
 
-from tip.actions import TemplatePathListingAction, TemplateValidationAction
+from tip.actions import TemplatePathListingAction, TemplateValidationAction, TemplateStructureInfoAction
 
-class Colors(object):
+class Colors():
     RED     = "\033[31m"
     GREEN   = "\033[32m"
     BLUE    = "\033[34m"
+
+class ShowTemplateIncludes(BaseCommand):
+    help = "Show who includes a template"
+    action = TemplateStructureInfoAction()
+
+    def handle(self, *args, **options):
+        template = args[0]
+        includes = self.action.list_includes(template)
+        for include in includes:
+            print include
 
 class ShowTemplateList(BaseCommand):
     help = "List templates on the project."
@@ -42,10 +52,11 @@ class ShowTemplateDirs(BaseCommand):
 
 class Command(BaseCommand):
     help = u"""Show information about templates."""
-    args = '<list dirs>'
+    args = '<list dirs includes>'
     sub_commands = {
         'list': ShowTemplateList,
         'dirs': ShowTemplateDirs,
+        'includes':ShowTemplateIncludes,
     }
 
     def handle(self, subcommand=None, *args, **kwargs):
