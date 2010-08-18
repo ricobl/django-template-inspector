@@ -62,4 +62,4 @@ Inspector for Django Templates
     * Template Block search
     * Template variables search
 3. Web Display of Template information
-
+4. Template refactoring suggestion
