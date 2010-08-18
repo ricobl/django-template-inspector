@@ -37,7 +37,7 @@ class TemplateValidationAction(object):
             get_template(template)
         except Exception, ex:
             is_valid = False
-            reason = ex.message
+            reason = unicode(ex)
 
         return is_valid, reason
 
