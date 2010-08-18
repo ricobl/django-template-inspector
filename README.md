@@ -42,6 +42,7 @@ Inspector for Django Templates
 * Release 6
     * Template Block search
     * Template variables search
+* Release 7
     * Web Display of Template information
 
 ## Planned Features
