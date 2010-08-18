@@ -18,8 +18,7 @@ class ShowTemplateIncludes(BaseCommand):
     help = "Show templates that includes a template"
     action = TemplateStructureInfoAction()
 
-    def handle(self, *args, **options):
-        template = args[0]
+    def handle(self, template, **options):
         includes = self.action.list_includes(template)
         for include in includes:
             print include
