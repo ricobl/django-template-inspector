@@ -15,7 +15,7 @@ class Colors():
     BLUE    = "\033[34m"
 
 class ShowTemplateIncludes(BaseCommand):
-    help = "Show who includes a template"
+    help = "Show templates that includes a template"
     action = TemplateStructureInfoAction()
 
     def handle(self, *args, **options):
