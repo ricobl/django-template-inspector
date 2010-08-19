@@ -30,6 +30,14 @@ def test_invoking_help_without_params_shows_help():
     assert content
 
 @with_setup(setup_stdout, teardown_stdout)
+def test_default_help_shows_available_sub_commands():
+    from tip.management.commands.tip import ShowHelp
+    command.handle('help')
+    output = ''.join(sys.stdout.outputs)
+    assert 'Available sub-commands:' in output
+    assert '  help                  %s' % ShowHelp.help.strip() in output, ShowHelp.help + '\n\n\n\n' + output
+
+@with_setup(setup_stdout, teardown_stdout)
 def test_invoking_help_without_params_shows_default_help():
     command.handle('help')
     content = ''.join(sys.stdout.outputs)

@@ -83,3 +83,8 @@ class Command(BaseCommand):
         command = self.get_subcommand(subcommand)
         return command.handle(*args, **kwargs)
 
+    def print_help(self, program_name, subcommand):
+        super(Command, self).print_help(program_name, subcommand)
+        print '\nAvailable sub-commands:'
+        for key, cmd_klass in Command.sub_commands.iteritems():
+            print '  %s%s' % (key.ljust(22), cmd_klass.help)
