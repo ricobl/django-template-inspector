@@ -5,11 +5,13 @@
 # the app named "tip" and the namesake command
 from __future__ import absolute_import
 
+import sys
+
 from django.core.management.base import BaseCommand, CommandError
 
 from tip.actions import TemplatePathListingAction, TemplateValidationAction, TemplateStructureInfoAction
 
-class Colors():
+class Colors:
     RED     = "\033[31m"
     GREEN   = "\033[32m"
     BLUE    = "\033[34m"
@@ -49,17 +51,35 @@ class ShowTemplateDirs(BaseCommand):
             print path
         print ""
 
+class ShowHelp(BaseCommand):
+    help = "Shows help about tip command or sub-command."
+
+    def handle(self, subcommand=None, **options):
+        program_name = sys.argv[0]
+        if subcommand is None:
+            Command().print_help(program_name, 'tip')
+            return
+        command = Command.get_subcommand(subcommand)
+        command.print_help(program_name, 'tip %s' % subcommand)
+
 class Command(BaseCommand):
     help = u"""Show information about templates."""
-    args = '<list dirs includes>'
+    args = '<list dirs includes help>'
     sub_commands = {
+        'help': ShowHelp,
         'list': ShowTemplateList,
         'dirs': ShowTemplateDirs,
-        'includes':ShowTemplateIncludes,
+        'includes': ShowTemplateIncludes,
     }
 
-    def handle(self, subcommand=None, *args, **kwargs):
-        cmd_klass = self.sub_commands.get(subcommand, None)
+    @classmethod
+    def get_subcommand(cls, subcommand):
+        cmd_klass = cls.sub_commands.get(subcommand, None)
         if cmd_klass is None:
             raise CommandError('Invalid sub-command "%s".' % subcommand)
-        return cmd_klass().execute(*args, **kwargs)
+        return cmd_klass()
+
+    def handle(self, subcommand=None, *args, **kwargs):
+        command = self.get_subcommand(subcommand)
+        return command.handle(*args, **kwargs)
+
