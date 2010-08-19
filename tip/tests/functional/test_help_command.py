@@ -36,14 +36,14 @@ def test_invoking_help_without_params_shows_default_help():
 
     sys.stdout.outputs = []
 
-    command.print_help('manage.py', 'tip')
+    command.print_help(sys.argv[0], 'tip')
     expected = ''.join(sys.stdout.outputs)
     
-    assert expected == content
+    assert_equals(expected, content)
 
 @with_setup(setup_stdout, teardown_stdout)
 def test_invoking_help_with_param_shows_subcommand_help():
-    # Seens weird but we're getting help for the help command
+    # Feels weird but we're getting help for the help command
     # to avoid dependency of other commands in this test
     command.handle('help', 'help')
     content = ''.join(sys.stdout.outputs)
@@ -52,8 +52,8 @@ def test_invoking_help_with_param_shows_subcommand_help():
 
     from tip.management.commands.tip import ShowHelp
     help_command = ShowHelp()
-    help_command.print_help('manage.py', 'tip help')
+    help_command.print_help(sys.argv[0], 'tip help')
     expected = ''.join(sys.stdout.outputs)
     
-    assert expected == content
+    assert_equals(expected, content)
 
