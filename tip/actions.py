@@ -17,14 +17,14 @@ class TemplatePathListingAction (object):
 
         return template_paths
 
-    def list_templates(self, filter):
-        templates = {}
-        paths = self.list_all_paths()
-        for path in paths:
-            files_in_path = FileSystem.locate(path)
-            templates[path] = [f for f in files_in_path if filter(f)]
+    def iter_templates(self, filter):
+        for path in self.list_all_paths():
+            for template in FileSystem.locate(path):
+                if filter(template):
+                    yield {'path': path, 'template': template}
 
-        return templates
+    def list_templates(self, filter):
+        return list(self.iter_templates(filter))
 
     def list_all_templates(self):
         return self.list_templates(filter=lambda template: True)

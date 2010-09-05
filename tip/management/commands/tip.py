@@ -67,17 +67,12 @@ class ShowTemplateList(BaseCommand):
 
     def handle(self, **options):
         self.verbosity = int(options.get('verbosity', 1))
-
-        templates_in_paths = self.list_templates()
-        for path in self.list_paths():
-            for template in templates_in_paths[path]:
-                self.print_template(template, path)
+        for template_info in self.list_templates():
+            self.print_template(template_info['template'],
+                                template_info['path'])
 
 class ShowInvalidTemplateList(ShowTemplateList):
     help = "List invalid templates on the project."
-
-    def list_paths(self):
-        return self.listing_action.list_all_paths()
 
     def list_templates(self):
         return self.listing_action.list_templates(filter=filters.invalid)
