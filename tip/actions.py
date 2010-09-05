@@ -17,15 +17,17 @@ class TemplatePathListingAction (object):
 
         return template_paths
 
-    def list_all_templates(self):
+    def list_templates(self, filter):
         templates = {}
         paths = self.list_all_paths()
         for path in paths:
-            templates[path] = []
             files_in_path = FileSystem.locate(path)
-            map(templates[path].append, files_in_path)
+            templates[path] = [f for f in files_in_path if filter(f)]
 
         return templates
+
+    def list_all_templates(self):
+        return self.list_templates(filter=lambda template: True)
 
 class TemplateValidationAction(object):
 

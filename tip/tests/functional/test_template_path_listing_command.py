@@ -29,7 +29,7 @@ def i_have_a_sub_command_to_list_all_template_path():
 
 def invoking_the_listing_command_returns_all_paths():
     command.handle('dirs')
-    expected = abs(settings.ROOT_DIR, 'templates')
+    expected = ''.join(['\033[0;34m', abs(settings.ROOT_DIR, 'templates')])
     assert expected in sys.stdout.outputs,\
             'Should return a list of paths'
 

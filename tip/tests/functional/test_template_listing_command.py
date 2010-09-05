@@ -29,12 +29,32 @@ def i_have_a_sub_command_to_list_all_templates():
 
 def invoking_the_listing_command_returns_all_templates():
     command.handle('list')
-    expected = "\t\033[32m%s\033[0m" %\
-            abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html')
+    expected = "\033[0;32m%s" %\
+            abs(settings.ROOT_DIR, 'dummy_app1/templates\033[1;32m/base_app1.html')
     assert expected in sys.stdout.outputs, 'return a list of templates'
 
 def i_have_an_invalid_template():
     command.handle('list')
-    expected = "\t\033[31m%s\033[0m" %\
-            abs(settings.ROOT_DIR, 'dummy_app1/templates/invalid_template.html')
+    expected = "\033[0;31m%s" %\
+            abs(settings.ROOT_DIR, 'dummy_app1/templates\033[1;31m/invalid_template.html')
     assert expected in sys.stdout.outputs, 'should have an invalid template'
+
+@with_setup(setup_stdout, teardown_stdout)
+def test_i_have_an_invalid_template_listing_command():
+    i_have_a_sub_command_to_list_invalid_templates()
+    invoking_the_listing_command_returns_only_invalid_templates()
+
+def i_have_a_sub_command_to_list_invalid_templates():
+    assert 'invalid' in command.sub_commands
+
+def invoking_the_listing_command_returns_only_invalid_templates():
+    command.handle('invalid')
+    expected = "\033[0;31m%s" % \
+            abs(settings.ROOT_DIR, 'dummy_app1/templates\033[1;31m/invalid_template.html')
+
+    not_expected = "\033[0;32m%s" %\
+            abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html')
+
+    assert expected in sys.stdout.outputs, 'should have an invalid template'
+    assert not_expected not in sys.stdout.outputs, "shouldn't list valid templates"
+

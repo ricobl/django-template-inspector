@@ -9,12 +9,27 @@ import sys
 
 from django.core.management.base import BaseCommand, CommandError
 
+from tip import filters
 from tip.actions import TemplatePathListingAction, TemplateValidationAction, TemplateStructureInfoAction
 
+class Verbosity:
+    MINIMAL = 0
+    NORMAL = 1
+    ALL = 2
+
 class Colors:
-    RED     = "\033[31m"
-    GREEN   = "\033[32m"
-    BLUE    = "\033[34m"
+    OFF = "\033[0;00m"
+
+    RED = "\033[0;31m"
+    GREEN = "\033[0;32m"
+    BLUE = "\033[0;34m"
+
+    BOLD_RED = "\033[1;31m"
+    BOLD_GREEN = "\033[1;32m"
+    BOLD_BLUE = "\033[1;34m"
+
+def color_print(*args):
+    print ''.join(args), Colors.OFF
 
 class ShowTemplateIncludes(BaseCommand):
     help = "Show templates that includes a template"
@@ -27,29 +42,54 @@ class ShowTemplateIncludes(BaseCommand):
 
 class ShowTemplateList(BaseCommand):
     help = "List templates on the project."
-    listing_action      = TemplatePathListingAction()
+    listing_action = TemplatePathListingAction()
     validation_action = TemplateValidationAction()
-    def handle(self, **options):
-        templates_in_paths = self.listing_action.list_all_templates()
-        paths = self.listing_action.list_all_paths()
-        for path in paths:
-            print '%s%s\033[0m' %(Colors.BLUE, path)
 
+    def print_template(self, template, path):
+        is_valid, reason = self.validation_action.validate(template)
+
+        color_name = 'GREEN' if is_valid else 'RED'
+        bold_color = getattr(Colors, 'BOLD_%s' % color_name)
+        color = getattr(Colors, color_name)
+
+        template = template[len(path):]
+
+        color_print(color, path, bold_color, template)
+
+        if self.verbosity == Verbosity.ALL and reason:
+            print reason
+
+    def list_paths(self):
+        return self.listing_action.list_all_paths()
+
+    def list_templates(self):
+        return self.listing_action.list_all_templates()
+
+    def handle(self, **options):
+        self.verbosity = int(options.get('verbosity', 1))
+
+        templates_in_paths = self.list_templates()
+        for path in self.list_paths():
             for template in templates_in_paths[path]:
-                is_valid, reason = self.validation_action.validate(template)
-                color = Colors.GREEN if is_valid else Colors.RED
-                print '\t%s%s\033[0m' %(color, template)
-                if reason:
-                    print reason
+                self.print_template(template, path)
+
+class ShowInvalidTemplateList(ShowTemplateList):
+    help = "List invalid templates on the project."
+
+    def list_paths(self):
+        return self.listing_action.list_all_paths()
+
+    def list_templates(self):
+        return self.listing_action.list_templates(filter=filters.invalid)
 
 class ShowTemplateDirs(BaseCommand):
     help = "List available template dirs on the project."
     action = TemplatePathListingAction()
+
     def handle(self, **options):
         paths = self.action.list_all_paths()
         for path in paths:
-            print path
-        print ""
+            color_print(Colors.BLUE, path)
 
 class ShowHelp(BaseCommand):
     help = "Shows help about tip command or sub-command."
@@ -68,6 +108,7 @@ class Command(BaseCommand):
     sub_commands = {
         'help': ShowHelp,
         'list': ShowTemplateList,
+        'invalid': ShowInvalidTemplateList,
         'dirs': ShowTemplateDirs,
         'includes': ShowTemplateIncludes,
     }

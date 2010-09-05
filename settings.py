@@ -64,3 +64,4 @@ INSTALLED_APPS = (
 )
 
 TEST_RUNNER = 'nose_runner.run_tests'
+NOSE_ARGS = ['-sd']
