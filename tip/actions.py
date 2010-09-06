@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+import os
+
 from django.conf import settings
 
 from django.template.loaders.app_directories import app_template_dirs
-from django.template.loader import get_template
+from django.template.loader import get_template, select_template
 from django.template.loader_tags import ConstantIncludeNode
 from tip.filesystem import FileSystem
 
@@ -43,10 +45,21 @@ class TemplateValidationAction(object):
 
         return is_valid, reason
 
+def get_full_template_path(template):
+    listing_action = TemplatePathListingAction()
+    path_list = listing_action.list_all_paths()
+
+    possible_choices = [os.path.join(p, template) for p in path_list]
+
+    t = select_template(possible_choices)
+
+    return t.name
 
 class TemplateStructureInfoAction(object):
     def list_includes(self, template):
         template_object = get_template(template)
 
-        includes = [node.template.name for node in template_object.nodelist if isinstance(node, ConstantIncludeNode)]
-        return includes
+        return [get_full_template_path(node.template.name) \
+                for node in template_object.nodelist \
+                if isinstance(node, ConstantIncludeNode)]
+

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+import os
 import sys
 
 from django.conf import settings
@@ -30,6 +31,7 @@ def i_have_a_sub_command_to_list_all_templates():
 def invoking_the_listing_command_returns_all_templates():
     command.handle('includes', 'base_app1.html')
 
-    expected = "included_content/my_content.html"
+    expected = os.path.join(settings.ROOT_DIR,
+                            'dummy_app1/templates/included_content/my_content.html')
 
     assert expected in sys.stdout.outputs, 'Base template for inclusion expected'
