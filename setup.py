@@ -19,13 +19,15 @@
 from setuptools import setup, find_packages
 from tip import __version__
 
+tip_packages=[p for p in find_packages() if p.startswith('tip')]
+
 setup(name='django-tip',
     version=__version__,
     description='Inspector for Django Templates',
     author='Enrico Batista',
     author_email='ricobl@gmail.com',
     url='http://github.com/ricobl/django-template-inspector',
-    packages=['tip'],
+    packages=tip_packages,
     include_package_data = True,
     package_data = {
         'tip': [],
