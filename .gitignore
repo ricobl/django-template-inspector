@@ -1,6 +1,10 @@
+*.egg-info
 *.pyc
-*~
 *.swp
-?humbs.db
+*~
 .coverage
+?humbs.db
+build
+dist
+pip-log.txt
 tip.sqlite
