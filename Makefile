@@ -7,3 +7,5 @@ install:
 	@rm -rf build/ dist/ *.egg-info
 uninstall:
 	@pip uninstall django-tip
+upload:
+	@sudo python setup.py sdist upload --show-response
