@@ -10,9 +10,9 @@ Inspector for Django Templates
 
 1. Install the python module in your system:
 
-    `python setup.py install`
+    `pip install django-tip`
 
-2. Install the app within your django project by editing your `settings.py` file:
+2. Add `tip` to the `INSTALLED_APPS` list on your settings (eg: `settings.py`) file:
 
         INSTALLED_APPS = (
             'django.contrib.auth',
