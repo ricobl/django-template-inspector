@@ -8,3 +8,4 @@ build
 dist
 pip-log.txt
 tip.sqlite
+.ropeproject/
