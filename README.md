@@ -44,17 +44,19 @@ Inspector for Django Templates
     * Template listing
     * Template inclusion
 * Release 3
-    * Template inheritance (ordered)
+    * Invalid template listing
 * Release 4
+    * Template inheritance (ordered)
+* Release 5
     * Template overrides
     * Template Blocks
-* Release 5
+* Release 6
     * Template Blocks orphans
     * Template Blocks overrides
-* Release 6
+* Release 7
     * Template Block search
     * Template variables search
-* Release 7
+* Release 8
     * Web Display of Template information
 
 ## Planned Features
