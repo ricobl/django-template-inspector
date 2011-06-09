@@ -8,6 +8,7 @@ from __future__ import absolute_import
 import sys
 
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.termcolors import colorize
 
 from tip import filters
 from tip.actions import TemplatePathListingAction, TemplateValidationAction, TemplateStructureInfoAction
@@ -17,19 +18,13 @@ class Verbosity:
     NORMAL = 1
     ALL = 2
 
-class Colors:
-    OFF = "\033[0;00m"
 
-    RED = "\033[0;31m"
-    GREEN = "\033[0;32m"
-    BLUE = "\033[0;34m"
-
-    BOLD_RED = "\033[1;31m"
-    BOLD_GREEN = "\033[1;32m"
-    BOLD_BLUE = "\033[1;34m"
-
-def color_print(*args):
-    print ''.join(args), Colors.OFF
+def safe_colorize(text='', opts=(), **kwargs):
+    is_tty = sys.stdout.isatty()
+    if is_tty:
+        return colorize(text=text, opts=opts, **kwargs)
+    else:
+        return text
 
 class ShowTemplateIncludes(BaseCommand):
     help = "Show templates that includes a template"
@@ -48,13 +43,11 @@ class ShowTemplateList(BaseCommand):
     def print_template(self, template, path):
         is_valid, reason = self.validation_action.validate(template)
 
-        color_name = 'GREEN' if is_valid else 'RED'
-        bold_color = getattr(Colors, 'BOLD_%s' % color_name)
-        color = getattr(Colors, color_name)
+        color = 'green' if is_valid else 'red'
 
         template = template[len(path):]
 
-        color_print(color, path, bold_color, template)
+        print safe_colorize(path, fg=color) + safe_colorize(template, opts=('bold',), fg=color)
 
         if self.verbosity == Verbosity.ALL and reason:
             print reason
@@ -84,7 +77,7 @@ class ShowTemplateDirs(BaseCommand):
     def handle(self, **options):
         paths = self.action.list_all_paths()
         for path in paths:
-            color_print(Colors.BLUE, path)
+            print safe_colorize(path, fg='blue')
 
 class ShowHelp(BaseCommand):
     help = "Shows help about tip command or sub-command."

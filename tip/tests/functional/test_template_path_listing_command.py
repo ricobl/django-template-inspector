@@ -4,7 +4,7 @@
 import sys
 
 from django.conf import settings
-from nose.tools import assert_equals, with_setup
+from nose.tools import with_setup
 
 from tip.tests.helpers import abs, LoggableDevice
 from tip.management.commands import tip
@@ -29,7 +29,7 @@ def i_have_a_sub_command_to_list_all_template_path():
 
 def invoking_the_listing_command_returns_all_paths():
     command.handle('dirs')
-    expected = ''.join(['\033[0;34m', abs(settings.ROOT_DIR, 'templates')])
+    expected = abs(settings.ROOT_DIR, 'templates')
     assert expected in sys.stdout.outputs,\
             'Should return a list of paths'
 

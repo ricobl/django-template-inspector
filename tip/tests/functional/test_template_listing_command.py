@@ -4,7 +4,7 @@
 import sys
 
 from django.conf import settings
-from nose.tools import assert_equals, with_setup
+from nose.tools import with_setup
 
 from tip.tests.helpers import abs, LoggableDevice
 from tip.management.commands import tip
@@ -29,14 +29,13 @@ def i_have_a_sub_command_to_list_all_templates():
 
 def invoking_the_listing_command_returns_all_templates():
     command.handle('list')
-    expected = "\033[0;32m%s" %\
-            abs(settings.ROOT_DIR, 'dummy_app1/templates\033[1;32m/base_app1.html')
-    assert expected in sys.stdout.outputs, 'return a list of templates'
+    expected = abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html')
+    assert expected in sys.stdout.outputs, '"%s" expected in "%s"' \
+            % (expected, sys.stdout.outputs)
 
 def i_have_an_invalid_template():
     command.handle('list')
-    expected = "\033[0;31m%s" %\
-            abs(settings.ROOT_DIR, 'dummy_app1/templates\033[1;31m/invalid_template.html')
+    expected = abs(settings.ROOT_DIR, 'dummy_app1/templates/invalid_template.html')
     assert expected in sys.stdout.outputs, 'should have an invalid template'
 
 @with_setup(setup_stdout, teardown_stdout)
@@ -49,11 +48,9 @@ def i_have_a_sub_command_to_list_invalid_templates():
 
 def invoking_the_listing_command_returns_only_invalid_templates():
     command.handle('invalid')
-    expected = "\033[0;31m%s" % \
-            abs(settings.ROOT_DIR, 'dummy_app1/templates\033[1;31m/invalid_template.html')
+    expected = abs(settings.ROOT_DIR, 'dummy_app1/templates/invalid_template.html')
 
-    not_expected = "\033[0;32m%s" %\
-            abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html')
+    not_expected = abs(settings.ROOT_DIR, 'dummy_app1/templates/base_app1.html')
 
     assert expected in sys.stdout.outputs, 'should have an invalid template'
     assert not_expected not in sys.stdout.outputs, "shouldn't list valid templates"
