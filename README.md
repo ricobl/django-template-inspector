@@ -4,7 +4,7 @@ Inspector for Django Templates
 
 ## Dependencies
 
-1. django 1.1+
+1. django 1.1+ (seems to work on django==1.3)
 
 ## Installing
 
@@ -23,6 +23,18 @@ Inspector for Django Templates
             ...
             'tip',
         )
+
+## Usage
+
+        ./manage.py tip [sub-command]
+
+### Sub-commands
+
+* `./manage.py tip help`: shows available sub-commands
+* `./manage.py tip dirs`: lists app and project template dirs
+* `./manage.py tip list`: lists all templates in all template dirs
+* `./manage.py tip invalid`: lists invalid templates
+    * with added verbosity (`-v 2`) displays the error
 
 ## Release Plan
 
