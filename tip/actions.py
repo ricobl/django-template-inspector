@@ -55,6 +55,12 @@ def get_full_template_path(template):
 
     return t.name
 
+def break_path_and_template(template):
+    paths = TemplatePathListingAction().list_all_paths()
+    for path in paths:
+        if template.startswith(path):
+            return path, template[len(path):]
+
 class TemplateStructureInfoAction(object):
     def list_includes(self, template):
         template_object = get_template(template)

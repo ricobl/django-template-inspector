@@ -11,7 +11,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.termcolors import colorize
 
 from tip import filters
-from tip.actions import TemplatePathListingAction, TemplateValidationAction, TemplateStructureInfoAction
+from tip.actions import (TemplatePathListingAction, TemplateValidationAction,
+        TemplateStructureInfoAction, break_path_and_template)
 
 class Verbosity:
     MINIMAL = 0
@@ -30,10 +31,15 @@ class ShowTemplateIncludes(BaseCommand):
     help = "Show templates that includes a template"
     action = TemplateStructureInfoAction()
 
-    def handle(self, template, **options):
+    def handle(self, template='', **options):
+        if not template:
+            print safe_colorize('include command requires a template', fg='red')
+            raise SystemExit
         includes = self.action.list_includes(template)
         for include in includes:
-            print include
+            path, include_template = break_path_and_template(include)
+            print safe_colorize(path, fg='yellow') + safe_colorize(include[len(path):], opts=('bold',), fg='yellow')
+
 
 class ShowTemplateList(BaseCommand):
     help = "List templates on the project."
