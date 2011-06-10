@@ -1,4 +1,4 @@
-# Django Template Inspector (tip) 0.0.1
+# Django Template Inspector (tip)
 
 Inspector for Django Templates
 
